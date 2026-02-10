@@ -7,8 +7,9 @@
   },
   "scripts": {
     "dev": "tsx src/index.ts",
-    "build": "prisma generate && prisma migrate deploy && tsc",
-    "start": "node dist/src/index.js"
+    "build": "prisma generate && tsc",
+    "start": "node dist/src/index.js",
+    "migrate": "prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.0.0",
