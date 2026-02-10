@@ -6,7 +6,7 @@
     "strict": true,
     "lib": ["esnext"],
     "esModuleInterop": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true
   }
