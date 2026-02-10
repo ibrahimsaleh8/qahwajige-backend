@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "tsx src/index.ts",
     "build": "prisma generate && tsc",
-    "migrate:deploy": "prisma migrate deploy",
+    "deploy:migrate": "prisma migrate deploy && prisma generate",
     "start": "node dist/src/index.js"
   },
   "dependencies": {
