@@ -72,3 +72,13 @@ export type ContactSection = Prisma.ContactSectionModel
  * 
  */
 export type GalleryImage = Prisma.GalleryImageModel
+/**
+ * Model Package
+ * 
+ */
+export type Package = Prisma.PackageModel
+/**
+ * Model Rating
+ * 
+ */
+export type Rating = Prisma.RatingModel

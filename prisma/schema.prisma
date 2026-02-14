@@ -27,9 +27,11 @@ model Project {
   contactSection  ContactSection?
   galleryImages   GalleryImage[]
   heroSection     HeroSection?
+  packages        Package[]
   servicesSection ServicesSection?
   siteSettings    SiteSettings?
   whyUsSection    WhyUsSection?
+  ratings         Rating[]
 
   @@index([projectId])
   @@map("projects")
@@ -172,4 +174,30 @@ model GalleryImage {
 
   @@index([projectId])
   @@map("gallery_images")
+}
+
+model Package {
+  id        String   @id @default(cuid())
+  projectId String
+  title     String
+  features  String[]
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("packages")
+}
+
+model Rating {
+  id              String   @id @default(cuid())
+  projectId       String
+  numberOfRatings Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@map("ratings")
 }

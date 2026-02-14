@@ -338,7 +338,7 @@ router.get(
     try {
       const { id } = req.params as { id: string };
 
-      const project = (await prisma.project.findUnique({
+      const project = await prisma.project.findUnique({
         where: { id },
         include: {
           heroSection: true,
@@ -352,11 +352,36 @@ router.get(
           contactSection: true,
           galleryImages: true,
           siteSettings: true,
+          packages: {
+            select: {
+              id: true,
+              title: true,
+              features: true,
+              image: true,
+            },
+          },
+          ratings: {
+            select: {
+              numberOfRatings: true,
+            },
+          },
         },
-      })) as ProjectWithMainData | null;
+      });
 
       if (!project) {
         return res.status(404).json({ error: "Project not found" });
+      }
+
+      // Calculate average rating
+      let averageRating = 0;
+      let totalRatings = 0;
+      if (project.ratings && project.ratings.length > 0) {
+        const totalStars = project.ratings.reduce(
+          (sum, r) => sum + r.numberOfRatings,
+          0,
+        );
+        totalRatings = project.ratings.length;
+        averageRating = parseFloat((totalStars / totalRatings).toFixed(1));
       }
 
       const response = {
@@ -412,6 +437,11 @@ router.get(
           phone: project.siteSettings?.phone ?? "",
           email: project.siteSettings?.email ?? "",
           address: project.siteSettings?.address ?? "",
+        },
+        packages: project.packages,
+        rating: {
+          averageRating,
+          totalRatings,
         },
       };
 
@@ -1597,6 +1627,182 @@ router.put(
 );
 
 // -------------------------
+// Package Routes
+// -------------------------
+
+// POST /api/package - Create new package
+router.post("/api/package", async (req: Request, res: Response) => {
+  try {
+    const body = req.body || {};
+    const { projectId, title, features, image } = body;
+
+    if (!projectId || !title || !image) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        message: "projectId, title and image are required",
+      });
+    }
+
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+    });
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    const featuresArray = Array.isArray(features) ? features : [];
+
+    const pkg = await prisma.package.create({
+      data: {
+        projectId,
+        title: String(title).trim(),
+        features: featuresArray.map((f: unknown) => String(f)),
+        image: String(image).trim(),
+      },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Package created successfully",
+      data: pkg,
+    });
+  } catch (error) {
+    console.error("Error creating package:", error);
+    return res.status(500).json({
+      error: "Failed to create package",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// PUT /api/package/:id - Update package
+router.put("/api/package/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params as { id: string };
+    const body = req.body || {};
+    const { title, features, image } = body;
+
+    if (!id) {
+      return res.status(400).json({
+        error: "Package id is required in the route",
+      });
+    }
+
+    const existing = await prisma.package.findUnique({
+      where: { id },
+    });
+
+    if (!existing) {
+      return res.status(404).json({ error: "Package not found" });
+    }
+
+    const updateData: { title?: string; features?: string[]; image?: string } =
+      {};
+
+    if (title !== undefined) {
+      updateData.title = String(title).trim();
+    }
+    if (features !== undefined) {
+      updateData.features = Array.isArray(features)
+        ? features.map((f: unknown) => String(f))
+        : [];
+    }
+    if (image !== undefined) {
+      updateData.image = String(image).trim();
+    }
+
+    const pkg = await prisma.package.update({
+      where: { id },
+      data: updateData,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Package updated successfully",
+      data: pkg,
+    });
+  } catch (error) {
+    console.error("Error updating package:", error);
+    return res.status(500).json({
+      error: "Failed to update package",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// -------------------------
+// Rating Routes
+// -------------------------
+
+// POST /api/rating - Add new rating
+router.post("/api/rating", async (req: Request, res: Response) => {
+  try {
+    const body = req.body || {};
+    const { projectId, stars } = body;
+
+    if (!projectId || stars === undefined) {
+      return res.status(400).json({
+        error: "Missing required fields",
+        message: "projectId and stars are required",
+      });
+    }
+
+    const starsNum = Number(stars);
+    if (isNaN(starsNum) || starsNum < 1 || starsNum > 5) {
+      return res.status(400).json({
+        error: "Invalid stars value",
+        message: "stars must be a number between 1 and 5",
+      });
+    }
+
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+    });
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    // Create new rating entry
+    const newRating = await prisma.rating.create({
+      data: {
+        projectId,
+        numberOfRatings: starsNum,
+      },
+    });
+
+    // Get all ratings for this project to calculate average
+    const allRatings = await prisma.rating.findMany({
+      where: { projectId },
+    });
+
+    const totalStars = allRatings.reduce(
+      (sum, r) => sum + r.numberOfRatings,
+      0,
+    );
+    const averageRating = (totalStars / allRatings.length).toFixed(1);
+
+    return res.status(201).json({
+      success: true,
+      message: "Rating added successfully",
+      data: {
+        rating: newRating,
+        statistics: {
+          averageRating: parseFloat(averageRating),
+          totalRatings: allRatings.length,
+          totalStars: totalStars,
+        },
+      },
+    });
+  } catch (error) {
+    console.error("Error adding rating:", error);
+    return res.status(500).json({
+      error: "Failed to add rating",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// -------------------------
 // Generic Upload Images (non-dashboard)
 // -------------------------
 
@@ -1685,6 +1891,86 @@ router.post(
       console.error("Error uploading image:", error);
       return res.status(500).json({
         error: "Failed to upload image",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// GET /api/project/:projectId/packages
+router.get(
+  "/api/project/:projectId/packages",
+  async (req: Request, res: Response) => {
+    try {
+      const { projectId } = req.params as { projectId: string };
+
+      if (!projectId) {
+        return res.status(400).json({
+          error: "Project ID is required in the route",
+        });
+      }
+
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const packages = await prisma.package.findMany({
+        where: { projectId },
+        orderBy: { createdAt: "desc" },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Packages fetched successfully",
+        data: packages,
+      });
+    } catch (error) {
+      console.error("Error fetching packages:", error);
+      return res.status(500).json({
+        error: "Failed to fetch packages",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// DELETE /api/package/:packageId
+router.delete(
+  "/api/package/:packageId",
+  async (req: Request, res: Response) => {
+    try {
+      const { packageId } = req.params as { packageId: string };
+
+      if (!packageId) {
+        return res.status(400).json({
+          error: "Package ID is required in the route",
+        });
+      }
+
+      const pkg = await prisma.package.findUnique({
+        where: { id: packageId },
+      });
+
+      if (!pkg) {
+        return res.status(404).json({ error: "Package not found" });
+      }
+
+      await prisma.package.delete({
+        where: { id: packageId },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Package deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting package:", error);
+      return res.status(500).json({
+        error: "Failed to delete package",
         message: error instanceof Error ? error.message : "Unknown error",
       });
     }
