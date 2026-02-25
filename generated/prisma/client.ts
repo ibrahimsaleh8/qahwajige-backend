@@ -102,3 +102,8 @@ export type Package = Prisma.PackageModel
  * 
  */
 export type Rating = Prisma.RatingModel
+/**
+ * Model Article
+ * 
+ */
+export type Article = Prisma.ArticleModel

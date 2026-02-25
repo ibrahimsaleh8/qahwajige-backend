@@ -32,6 +32,7 @@ model Project {
   siteSettings    SiteSettings?
   whyUsSection    WhyUsSection?
   ratings         Rating[]
+  articles        Article[]
 
   @@index([projectId])
   @@map("projects")
@@ -200,4 +201,18 @@ model Rating {
 
   @@index([projectId])
   @@map("ratings")
+}
+
+model Article {
+  id         String   @id @default(cuid())
+  projectId  String
+  title      String
+  content    String
+  coverImage String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([title])
+  @@map("articles")
 }

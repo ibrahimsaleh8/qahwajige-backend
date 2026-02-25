@@ -2100,4 +2100,222 @@ router.delete(
   },
 );
 
+// -------------------------
+// Article Routes
+// -------------------------
+
+// GET /api/project/:projectId/articles
+router.get(
+  "/api/project/:projectId/articles",
+  async (req: Request, res: Response) => {
+    try {
+      const { projectId } = req.params as { projectId: string };
+
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const articles = await prisma.article.findMany({
+        where: { projectId },
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          title: true,
+          coverImage: true,
+          createdAt: true,
+          updatedAt: true,
+          content: true,
+        },
+      });
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          articles,
+          count: articles.length,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      return res.status(500).json({
+        error: "Failed to fetch articles",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// POST /api/article
+router.post("/api/article", async (req: Request, res: Response) => {
+  try {
+    const body = req.body || {};
+    const { projectId, title, content, coverImage } = body;
+
+    // 1️⃣ Validation
+    if (!projectId || typeof projectId !== "string") {
+      return res.status(400).json({
+        error: "projectId is required",
+      });
+    }
+
+    if (!title || typeof title !== "string" || !title.trim()) {
+      return res.status(400).json({
+        error: "title is required",
+      });
+    }
+
+    // 2️⃣ Check project exists
+    const project = await prisma.project.findUnique({
+      where: { id: projectId },
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        error: "Project not found",
+      });
+    }
+
+    const isExistTitle = await prisma.article.findFirst({
+      where: {
+        title,
+      },
+    });
+
+    if (isExistTitle) {
+      return res.status(404).json({
+        error: "هناك مقالة لها نفس العنوان من فضلك غير العنوان",
+      });
+    }
+
+    // 4️⃣ Create article
+    const article = await prisma.article.create({
+      data: {
+        projectId,
+        title: title.trim(),
+        content: content ? String(content) : "",
+        coverImage:
+          coverImage !== undefined && coverImage !== null && coverImage !== ""
+            ? String(coverImage).trim()
+            : null,
+      },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Article created successfully",
+      data: { article },
+    });
+  } catch (error) {
+    console.error("Error creating article:", error);
+
+    return res.status(500).json({
+      error: "Failed to create article",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// GET /api/article/:articleId
+router.get("/api/article/title/:title", async (req: Request, res: Response) => {
+  try {
+    const { title } = req.params as { title: string };
+
+    const article = await prisma.article.findFirst({
+      where: { title },
+    });
+
+    if (!article) {
+      return res.status(404).json({ error: "Article not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: { article },
+    });
+  } catch (error) {
+    console.error("Error fetching article:", error);
+    return res.status(500).json({
+      error: "Failed to fetch article",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// PUT /api/article/:articleId
+router.put("/api/article/:articleId", async (req: Request, res: Response) => {
+  try {
+    const { articleId } = req.params as { articleId: string };
+    const body = req.body || {};
+    const { title, content, coverImage } = body;
+
+    const existingArticle = await prisma.article.findUnique({
+      where: { id: articleId },
+    });
+
+    if (!existingArticle) {
+      return res.status(404).json({ error: "Article not found" });
+    }
+
+    const updatedArticle = await prisma.article.update({
+      where: { id: articleId },
+      data: {
+        title: title ? String(title).trim() : existingArticle.title,
+        content: content ?? existingArticle.content,
+        coverImage:
+          coverImage !== undefined
+            ? coverImage
+              ? String(coverImage).trim()
+              : null
+            : existingArticle.coverImage,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Article updated successfully",
+      data: { article: updatedArticle },
+    });
+  } catch (error) {
+    console.error("Error updating article:", error);
+    return res.status(500).json({
+      error: "Failed to update article",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// DELETE /api/article/:articleId
+router.delete(
+  "/api/article/:articleId",
+  async (req: Request, res: Response) => {
+    try {
+      const { articleId } = req.params as { articleId: string };
+
+      const article = await prisma.article.findUnique({
+        where: { id: articleId },
+      });
+
+      if (!article) {
+        return res.status(404).json({ error: "Article not found" });
+      }
+
+      await prisma.article.delete({ where: { id: articleId } });
+
+      return res.status(200).json({
+        success: true,
+        message: "Article deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting article:", error);
+      return res.status(500).json({
+        error: "Failed to delete article",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
 export default router;
