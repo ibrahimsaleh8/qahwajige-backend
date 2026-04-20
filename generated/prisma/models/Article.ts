@@ -214,17 +214,17 @@ export type ArticleOrderByWithRelationInput = {
 
 export type ArticleWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  projectId?: string
   AND?: Prisma.ArticleWhereInput | Prisma.ArticleWhereInput[]
   OR?: Prisma.ArticleWhereInput[]
   NOT?: Prisma.ArticleWhereInput | Prisma.ArticleWhereInput[]
+  projectId?: Prisma.StringFilter<"Article"> | string
   title?: Prisma.StringFilter<"Article"> | string
   content?: Prisma.StringFilter<"Article"> | string
   coverImage?: Prisma.StringNullableFilter<"Article"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Article"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
-}, "id" | "projectId">
+}, "id">
 
 export type ArticleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

@@ -47,8 +47,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server ready at: ${PORT}`));
-
+app.listen(PORT as number, "0.0.0.0", () => {
+  console.log(`Server ready at: ${PORT}`);
+});
 export default app;
