@@ -47,7 +47,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-const PORT = process.env.PORT ? Number(process.env.PORT) : 5000;
+const PORT = 5000;
 
 app.listen(PORT, () => console.log(`Server ready at: ${PORT}`));
 
