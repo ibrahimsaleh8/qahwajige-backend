@@ -6,6 +6,8 @@ import multer from "multer";
 import { PrismaClient, Prisma } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import dotenv from "dotenv";
+import { socialMediaLinksRouter } from "./routes/socialMediaLinks";
+import { customSectionRouter } from "./routes/customSection";
 
 dotenv.config();
 
@@ -13,6 +15,8 @@ const pool = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter: pool });
 
 export const router = express.Router();
+router.use(socialMediaLinksRouter);
+router.use(customSectionRouter);
 const upload = multer();
 // Configure Cloudinary (reused by multiple routes)
 cloudinary.config({
@@ -365,6 +369,23 @@ router.get(
               numberOfRatings: true,
             },
           },
+          socialMediaLinks: {
+            select: {
+              facebook: true,
+              instagram: true,
+              tiktok: true,
+              twitter: true,
+              youtube: true,
+            },
+          },
+          customSections: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              cards: true,
+            },
+          },
         },
       });
 
@@ -443,6 +464,8 @@ router.get(
           averageRating,
           totalRatings,
         },
+        socialMediaLinks: project.socialMediaLinks,
+        customSections: project.customSections ?? null,
       };
 
       return res.status(200).json(response);
@@ -1392,6 +1415,137 @@ router.put(
   },
 );
 
+// POST /api/dashboard/:id/create-why-us-feature
+router.post(
+  "/api/dashboard/:id/create-why-us-feature",
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params as { id: string };
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Project id is required in the route",
+        });
+      }
+
+      const body = req.body || {};
+      const { title, description, icon } = body;
+
+      if (!title || !description || !icon) {
+        return res.status(400).json({
+          error: "Missing required fields",
+          message: "title, description, and icon are required",
+        });
+      }
+
+      // Find the whyUs section for this project
+      const whyUsSection = await prisma.whyUsSection.findUnique({
+        where: { projectId: id },
+      });
+
+      if (!whyUsSection) {
+        return res.status(404).json({
+          error: "Why Us section not found for this project",
+          message: "Create a Why Us section before adding individual features",
+        });
+      }
+
+      const newFeature = await prisma.whyUsFeature.create({
+        data: {
+          sectionId: whyUsSection.id,
+          title,
+          description,
+          icon,
+        },
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "Why Us feature created successfully",
+        data: {
+          feature: {
+            id: newFeature.id,
+            sectionId: newFeature.sectionId,
+            title: newFeature.title,
+            description: newFeature.description,
+            icon: newFeature.icon,
+            createdAt: newFeature.createdAt.toISOString(),
+            updatedAt: newFeature.updatedAt.toISOString(),
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Error creating why us feature:", error);
+      return res.status(500).json({
+        error: "Failed to create why us feature",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// DELETE /api/dashboard/:id/delete-why-us-feature
+router.delete(
+  "/api/dashboard/:id/delete-why-us-feature",
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params as { id: string };
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Project id is required in the route",
+        });
+      }
+
+      const body = req.body || {};
+      const { featureId } = body;
+
+      if (!featureId) {
+        return res.status(400).json({
+          error: "Missing required field",
+          message: "featureId is required",
+        });
+      }
+
+      const existingFeature = await prisma.whyUsFeature.findUnique({
+        where: { id: featureId },
+        include: {
+          section: {
+            select: {
+              projectId: true,
+            },
+          },
+        },
+      });
+
+      if (!existingFeature) {
+        return res.status(404).json({ error: "Feature not found" });
+      }
+
+      if (existingFeature.section.projectId !== id) {
+        return res.status(403).json({
+          error: "Feature does not belong to this project",
+        });
+      }
+
+      await prisma.whyUsFeature.delete({
+        where: { id: featureId },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Why Us feature deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting why us feature:", error);
+      return res.status(500).json({
+        error: "Failed to delete why us feature",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
 // -------------------------
 // Dashboard - Services section
 // -------------------------
@@ -1608,6 +1762,138 @@ router.put(
       console.error("Error updating service:", error);
       return res.status(500).json({
         error: "Failed to update service",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// POST /api/dashboard/:id/create-service
+router.post(
+  "/api/dashboard/:id/create-service",
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params as { id: string };
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Project id is required in the route",
+        });
+      }
+
+      const body = req.body || {};
+      const { title, description, icon } = body;
+
+      if (!title || !description || !icon) {
+        return res.status(400).json({
+          error: "Missing required fields",
+          message: "title, description, and icon are required",
+        });
+      }
+
+      // Find the services section for this project
+      const servicesSection = await prisma.servicesSection.findUnique({
+        where: { projectId: id },
+      });
+
+      if (!servicesSection) {
+        return res.status(404).json({
+          error: "Services section not found for this project",
+          message:
+            "Create a services section before adding individual services",
+        });
+      }
+
+      const newService = await prisma.service.create({
+        data: {
+          sectionId: servicesSection.id,
+          title,
+          description,
+          icon,
+        },
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "Service created successfully",
+        data: {
+          service: {
+            id: newService.id,
+            sectionId: newService.sectionId,
+            title: newService.title,
+            description: newService.description,
+            icon: newService.icon,
+            createdAt: newService.createdAt.toISOString(),
+            updatedAt: newService.updatedAt.toISOString(),
+          },
+        },
+      });
+    } catch (error) {
+      console.error("Error creating service:", error);
+      return res.status(500).json({
+        error: "Failed to create service",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// DELETE /api/dashboard/:id/delete-service
+router.delete(
+  "/api/dashboard/:id/delete-service",
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params as { id: string };
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Project id is required in the route",
+        });
+      }
+
+      const body = req.body || {};
+      const { serviceId } = body;
+
+      if (!serviceId) {
+        return res.status(400).json({
+          error: "Missing required field",
+          message: "serviceId is required",
+        });
+      }
+
+      const existingService = await prisma.service.findUnique({
+        where: { id: serviceId },
+        include: {
+          section: {
+            select: {
+              projectId: true,
+            },
+          },
+        },
+      });
+
+      if (!existingService) {
+        return res.status(404).json({ error: "Service not found" });
+      }
+
+      if (existingService.section.projectId !== id) {
+        return res.status(403).json({
+          error: "Service does not belong to this project",
+        });
+      }
+
+      await prisma.service.delete({
+        where: { id: serviceId },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Service deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting service:", error);
+      return res.status(500).json({
+        error: "Failed to delete service",
         message: error instanceof Error ? error.message : "Unknown error",
       });
     }

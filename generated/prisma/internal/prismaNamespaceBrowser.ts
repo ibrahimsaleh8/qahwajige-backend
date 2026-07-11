@@ -64,7 +64,10 @@ export const ModelName = {
   GalleryImage: 'GalleryImage',
   Package: 'Package',
   Rating: 'Rating',
-  Article: 'Article'
+  Article: 'Article',
+  SocialMediaLinks: 'SocialMediaLinks',
+  CustomSection: 'CustomSection',
+  CustomSectionCard: 'CustomSectionCard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -270,6 +273,46 @@ export const ArticleScalarFieldEnum = {
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
+
+
+export const SocialMediaLinksScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  instagram: 'instagram',
+  facebook: 'facebook',
+  tiktok: 'tiktok',
+  twitter: 'twitter',
+  youtube: 'youtube',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SocialMediaLinksScalarFieldEnum = (typeof SocialMediaLinksScalarFieldEnum)[keyof typeof SocialMediaLinksScalarFieldEnum]
+
+
+export const CustomSectionScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomSectionScalarFieldEnum = (typeof CustomSectionScalarFieldEnum)[keyof typeof CustomSectionScalarFieldEnum]
+
+
+export const CustomSectionCardScalarFieldEnum = {
+  id: 'id',
+  sectionId: 'sectionId',
+  title: 'title',
+  description: 'description',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomSectionCardScalarFieldEnum = (typeof CustomSectionCardScalarFieldEnum)[keyof typeof CustomSectionCardScalarFieldEnum]
 
 
 export const SortOrder = {

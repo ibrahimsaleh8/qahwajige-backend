@@ -87,3 +87,18 @@ export type Rating = Prisma.RatingModel
  * 
  */
 export type Article = Prisma.ArticleModel
+/**
+ * Model SocialMediaLinks
+ * 
+ */
+export type SocialMediaLinks = Prisma.SocialMediaLinksModel
+/**
+ * Model CustomSection
+ * 
+ */
+export type CustomSection = Prisma.CustomSectionModel
+/**
+ * Model CustomSectionCard
+ * 
+ */
+export type CustomSectionCard = Prisma.CustomSectionCardModel

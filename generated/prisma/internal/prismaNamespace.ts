@@ -397,7 +397,10 @@ export const ModelName = {
   GalleryImage: 'GalleryImage',
   Package: 'Package',
   Rating: 'Rating',
-  Article: 'Article'
+  Article: 'Article',
+  SocialMediaLinks: 'SocialMediaLinks',
+  CustomSection: 'CustomSection',
+  CustomSectionCard: 'CustomSectionCard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -413,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "project" | "siteSettings" | "heroSection" | "aboutSection" | "servicesSection" | "service" | "whyUsSection" | "whyUsFeature" | "contactSection" | "galleryImage" | "package" | "rating" | "article"
+    modelProps: "admin" | "project" | "siteSettings" | "heroSection" | "aboutSection" | "servicesSection" | "service" | "whyUsSection" | "whyUsFeature" | "contactSection" | "galleryImage" | "package" | "rating" | "article" | "socialMediaLinks" | "customSection" | "customSectionCard"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1453,6 +1456,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SocialMediaLinks: {
+      payload: Prisma.$SocialMediaLinksPayload<ExtArgs>
+      fields: Prisma.SocialMediaLinksFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SocialMediaLinksFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SocialMediaLinksFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>
+        }
+        findFirst: {
+          args: Prisma.SocialMediaLinksFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SocialMediaLinksFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>
+        }
+        findMany: {
+          args: Prisma.SocialMediaLinksFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>[]
+        }
+        create: {
+          args: Prisma.SocialMediaLinksCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>
+        }
+        createMany: {
+          args: Prisma.SocialMediaLinksCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SocialMediaLinksCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>[]
+        }
+        delete: {
+          args: Prisma.SocialMediaLinksDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>
+        }
+        update: {
+          args: Prisma.SocialMediaLinksUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>
+        }
+        deleteMany: {
+          args: Prisma.SocialMediaLinksDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SocialMediaLinksUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SocialMediaLinksUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>[]
+        }
+        upsert: {
+          args: Prisma.SocialMediaLinksUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialMediaLinksPayload>
+        }
+        aggregate: {
+          args: Prisma.SocialMediaLinksAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSocialMediaLinks>
+        }
+        groupBy: {
+          args: Prisma.SocialMediaLinksGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialMediaLinksGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SocialMediaLinksCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialMediaLinksCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomSection: {
+      payload: Prisma.$CustomSectionPayload<ExtArgs>
+      fields: Prisma.CustomSectionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomSectionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomSectionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomSectionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomSectionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>
+        }
+        findMany: {
+          args: Prisma.CustomSectionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>[]
+        }
+        create: {
+          args: Prisma.CustomSectionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>
+        }
+        createMany: {
+          args: Prisma.CustomSectionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomSectionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomSectionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>
+        }
+        update: {
+          args: Prisma.CustomSectionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomSectionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomSectionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomSectionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomSectionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomSectionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomSection>
+        }
+        groupBy: {
+          args: Prisma.CustomSectionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomSectionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomSectionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomSectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomSectionCard: {
+      payload: Prisma.$CustomSectionCardPayload<ExtArgs>
+      fields: Prisma.CustomSectionCardFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomSectionCardFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomSectionCardFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomSectionCardFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomSectionCardFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>
+        }
+        findMany: {
+          args: Prisma.CustomSectionCardFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>[]
+        }
+        create: {
+          args: Prisma.CustomSectionCardCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>
+        }
+        createMany: {
+          args: Prisma.CustomSectionCardCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomSectionCardCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomSectionCardDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>
+        }
+        update: {
+          args: Prisma.CustomSectionCardUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomSectionCardDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomSectionCardUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomSectionCardUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomSectionCardUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomSectionCardPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomSectionCardAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomSectionCard>
+        }
+        groupBy: {
+          args: Prisma.CustomSectionCardGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomSectionCardGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomSectionCardCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomSectionCardCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1681,6 +1906,46 @@ export const ArticleScalarFieldEnum = {
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]
 
 
+export const SocialMediaLinksScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  instagram: 'instagram',
+  facebook: 'facebook',
+  tiktok: 'tiktok',
+  twitter: 'twitter',
+  youtube: 'youtube',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SocialMediaLinksScalarFieldEnum = (typeof SocialMediaLinksScalarFieldEnum)[keyof typeof SocialMediaLinksScalarFieldEnum]
+
+
+export const CustomSectionScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomSectionScalarFieldEnum = (typeof CustomSectionScalarFieldEnum)[keyof typeof CustomSectionScalarFieldEnum]
+
+
+export const CustomSectionCardScalarFieldEnum = {
+  id: 'id',
+  sectionId: 'sectionId',
+  title: 'title',
+  description: 'description',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomSectionCardScalarFieldEnum = (typeof CustomSectionCardScalarFieldEnum)[keyof typeof CustomSectionCardScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1882,6 +2147,9 @@ export type GlobalOmitConfig = {
   package?: Prisma.PackageOmit
   rating?: Prisma.RatingOmit
   article?: Prisma.ArticleOmit
+  socialMediaLinks?: Prisma.SocialMediaLinksOmit
+  customSection?: Prisma.CustomSectionOmit
+  customSectionCard?: Prisma.CustomSectionCardOmit
 }
 
 /* Types for Logging */
