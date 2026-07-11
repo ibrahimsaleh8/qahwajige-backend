@@ -50,7 +50,7 @@ app.use((req: Request, res: Response) => {
    GLOBAL ERROR HANDLER
 ============================ */
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
+  console.error("Error Happend ", err);
 
   const statusCode = err.statusCode || 500;
 
