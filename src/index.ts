@@ -3,13 +3,26 @@ import express, { Request, Response, NextFunction } from "express";
 import router from "./routes";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { allowedOrigins } from "./utils/allowedOrigins";
+import helmet from "helmet";
 
 const app = express();
 
 app.use(express.json());
+
+app.use(helmet());
+
 app.use(
   cors({
-    origin: true,
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true,
   }),
 );
