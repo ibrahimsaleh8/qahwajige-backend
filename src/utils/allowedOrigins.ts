@@ -1,6 +1,6 @@
 export const allowedOrigins = [
-  "https://ajji1.com",
-  "https://www.ajji1.com",
+  "https://ajii1.com",
+  "https://www.ajii1.com",
 
   "https://kahwg.com",
   "https://www.kahwg.com",
@@ -14,14 +14,8 @@ export const allowedOrigins = [
   "https://qahwajialriyad.com",
   "https://www.qahwajialriyad.com",
 
-  "https://qahwaji-al-riyadh.com",
-  "https://www.qahwaji-al-riyadh.com",
-
   "https://qahwaji-alriyadh.xyz",
   "https://www.qahwaji-alriyadh.xyz",
-
-  "https://qahwajl-ariyadh.com",
-  "https://www.qahwajl-ariyadh.com",
 
   "https://qahwaji-arriyadh.com",
   "https://www.qahwaji-arriyadh.com",
@@ -61,6 +55,9 @@ export const allowedOrigins = [
 
   "https://qahwaji-alriyadh.com",
   "https://www.qahwaji-alriyadh.com",
+
+  "https://qahwaji-ariyadh.com",
+  "https://www.qahwaji-ariyadh.com",
 
   "https://xn--rgb7bncfhh.com",
   "https://www.xn--rgb7bncfhh.com",
