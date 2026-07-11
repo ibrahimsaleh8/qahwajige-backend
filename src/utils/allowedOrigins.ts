@@ -38,8 +38,8 @@ export const allowedOrigins = [
   "https://qahwatiriyadh.com",
   "https://www.qahwatiriyadh.com",
 
-  "https://qahwcivige.com",
-  "https://www.qahwcivige.com",
+  "https://qahwciige.com",
+  "https://www.qahwciige.com",
 
   "https://qahwery.com",
   "https://www.qahwery.com",
