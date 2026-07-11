@@ -59,6 +59,6 @@ export const allowedOrigins = [
   "https://wwwqahwajiz.com",
   "https://www.wwwqahwajiz.com",
 
-  "https://قهوجيين.com",
-  "https://www.قهوجيين.com",
+  "https://xn--rgb7bncfhh.com",
+  "https://www.xn--rgb7bncfhh.com",
 ];
