@@ -871,6 +871,7 @@ router.put(
               phone: phone ?? existingProject.siteSettings?.phone,
               whatsapp: whatsapp ?? existingProject.siteSettings?.whatsapp,
               address: address ?? existingProject.siteSettings?.address,
+              siteDescription: projectDescription,
             },
           }),
           prisma.heroSection.upsert({
