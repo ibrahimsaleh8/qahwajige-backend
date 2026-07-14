@@ -139,7 +139,9 @@ export const authenticateAdmin = async (
       req.cookies?.token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({ error: "Access denied. No token provided." });
+      return res
+        .status(401)
+        .json({ error: "Access denied. No token provided." });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as {
@@ -149,7 +151,9 @@ export const authenticateAdmin = async (
 
     const admin = await prisma.admin.findUnique({ where: { id: decoded.id } });
     if (!admin) {
-      return res.status(401).json({ error: "Admin not found or invalid token." });
+      return res
+        .status(401)
+        .json({ error: "Admin not found or invalid token." });
     }
 
     (req as any).admin = { id: admin.id, email: admin.email };
@@ -595,6 +599,24 @@ router.get(
               numberOfRatings: true,
             },
           },
+
+          socialMediaLinks: {
+            select: {
+              facebook: true,
+              instagram: true,
+              tiktok: true,
+              twitter: true,
+              youtube: true,
+            },
+          },
+          customSections: {
+            select: {
+              id: true,
+              title: true,
+              description: true,
+              cards: true,
+            },
+          },
         },
       });
 
@@ -674,6 +696,8 @@ router.get(
           totalRatings,
         },
         keywords: project.siteSettings?.siteKeywords,
+        socialMediaLinks: project.socialMediaLinks,
+        customSections: project.customSections ?? null,
       };
 
       return res.status(200).json(response);
