@@ -2525,6 +2525,13 @@ router.get(
           createdAt: true,
           updatedAt: true,
           content: true,
+          category: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
         },
       });
 
@@ -2545,11 +2552,225 @@ router.get(
   },
 );
 
+// GET /api/project/:projectId/articles/category/:categorySlug
+router.get(
+  "/api/project/:projectId/articles/category/:categorySlug",
+  async (req: Request, res: Response) => {
+    try {
+      const { projectId, categorySlug } = req.params as {
+        projectId: string;
+        categorySlug: string;
+      };
+
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const category = await prisma.category.findUnique({
+        where: { projectId_slug: { projectId, slug: categorySlug } },
+      });
+
+      if (!category) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+
+      const articles = await prisma.article.findMany({
+        where: { projectId, categoryId: category.id },
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          title: true,
+          coverImage: true,
+          createdAt: true,
+          updatedAt: true,
+          content: true,
+          category: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+        },
+      });
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          category: { id: category.id, name: category.name, slug: category.slug },
+          articles,
+          count: articles.length,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching articles by category:", error);
+      return res.status(500).json({
+        error: "Failed to fetch articles",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// GET /api/project/:projectId/categories
+router.get(
+  "/api/project/:projectId/categories",
+  async (req: Request, res: Response) => {
+    try {
+      const { projectId } = req.params as { projectId: string };
+
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const categories = await prisma.category.findMany({
+        where: { projectId },
+        orderBy: { createdAt: "asc" },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          createdAt: true,
+          _count: { select: { articles: true } },
+        },
+      });
+
+      return res.status(200).json({
+        success: true,
+        data: { categories, count: categories.length },
+      });
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      return res.status(500).json({
+        error: "Failed to fetch categories",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  },
+);
+
+// POST /api/category
+router.post("/api/category", authenticateAdmin, async (req: Request, res: Response) => {
+  try {
+    const body = req.body || {};
+    const { projectId, name, slug } = body;
+
+    if (!projectId || typeof projectId !== "string") {
+      return res.status(400).json({ error: "projectId is required" });
+    }
+    if (!name || typeof name !== "string" || !name.trim()) {
+      return res.status(400).json({ error: "name is required" });
+    }
+    if (!slug || typeof slug !== "string" || !slug.trim()) {
+      return res.status(400).json({ error: "slug is required" });
+    }
+
+    const project = await prisma.project.findUnique({ where: { id: projectId } });
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    const existing = await prisma.category.findUnique({
+      where: { projectId_slug: { projectId, slug: slug.trim() } },
+    });
+    if (existing) {
+      return res.status(409).json({ error: "Category with this slug already exists" });
+    }
+
+    const category = await prisma.category.create({
+      data: {
+        projectId,
+        name: name.trim(),
+        slug: slug.trim(),
+      },
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Category created successfully",
+      data: { category },
+    });
+  } catch (error) {
+    console.error("Error creating category:", error);
+    return res.status(500).json({
+      error: "Failed to create category",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// PUT /api/category/:categoryId
+router.put("/api/category/:categoryId", authenticateAdmin, async (req: Request, res: Response) => {
+  try {
+    const { categoryId } = req.params as { categoryId: string };
+    const body = req.body || {};
+    const { name, slug } = body;
+
+    const existing = await prisma.category.findUnique({ where: { id: categoryId } });
+    if (!existing) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    const updatedCategory = await prisma.category.update({
+      where: { id: categoryId },
+      data: {
+        name: name ? String(name).trim() : existing.name,
+        slug: slug ? String(slug).trim() : existing.slug,
+      },
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Category updated successfully",
+      data: { category: updatedCategory },
+    });
+  } catch (error) {
+    console.error("Error updating category:", error);
+    return res.status(500).json({
+      error: "Failed to update category",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
+// DELETE /api/category/:categoryId
+router.delete("/api/category/:categoryId", authenticateAdmin, async (req: Request, res: Response) => {
+  try {
+    const { categoryId } = req.params as { categoryId: string };
+
+    const existing = await prisma.category.findUnique({ where: { id: categoryId } });
+    if (!existing) {
+      return res.status(404).json({ error: "Category not found" });
+    }
+
+    await prisma.category.delete({ where: { id: categoryId } });
+
+    return res.status(200).json({
+      success: true,
+      message: "Category deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting category:", error);
+    return res.status(500).json({
+      error: "Failed to delete category",
+      message: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+});
+
 // POST /api/article
 router.post("/api/article", async (req: Request, res: Response) => {
   try {
     const body = req.body || {};
-    const { projectId, title, content, coverImage } = body;
+    const { projectId, title, content, coverImage, categorySlug } = body;
 
     // 1️⃣ Validation
     if (!projectId || typeof projectId !== "string") {
@@ -2587,6 +2808,27 @@ router.post("/api/article", async (req: Request, res: Response) => {
       });
     }
 
+    // 3️⃣ Resolve category (default: "خدمات-الضيافة")
+    const resolvedSlug =
+      categorySlug && typeof categorySlug === "string" && categorySlug.trim()
+        ? categorySlug.trim()
+        : "خدمات-الضيافة";
+
+    let category = await prisma.category.findUnique({
+      where: { projectId_slug: { projectId, slug: resolvedSlug } },
+    });
+
+    // Auto-create the default category if it doesn't exist yet
+    if (!category) {
+      category = await prisma.category.create({
+        data: {
+          projectId,
+          name: resolvedSlug === "خدمات-الضيافة" ? "خدمات الضيافة" : resolvedSlug,
+          slug: resolvedSlug,
+        },
+      });
+    }
+
     // 4️⃣ Create article
     const article = await prisma.article.create({
       data: {
@@ -2597,6 +2839,12 @@ router.post("/api/article", async (req: Request, res: Response) => {
           coverImage !== undefined && coverImage !== null && coverImage !== ""
             ? String(coverImage).trim()
             : null,
+        categoryId: category.id,
+      },
+      include: {
+        category: {
+          select: { id: true, name: true, slug: true },
+        },
       },
     });
 
@@ -2615,13 +2863,18 @@ router.post("/api/article", async (req: Request, res: Response) => {
   }
 });
 
-// GET /api/article/:articleId
+// GET /api/article/:title
 router.get("/api/article/title/:title", async (req: Request, res: Response) => {
   try {
     const { title } = req.params as { title: string };
 
     const article = await prisma.article.findFirst({
       where: { title },
+      include: {
+        category: {
+          select: { id: true, name: true, slug: true },
+        },
+      },
     });
 
     if (!article) {
@@ -2646,7 +2899,7 @@ router.put("/api/article/:articleId", async (req: Request, res: Response) => {
   try {
     const { articleId } = req.params as { articleId: string };
     const body = req.body || {};
-    const { title, content, coverImage } = body;
+    const { title, content, coverImage, categorySlug } = body;
 
     const existingArticle = await prisma.article.findUnique({
       where: { id: articleId },
@@ -2654,6 +2907,23 @@ router.put("/api/article/:articleId", async (req: Request, res: Response) => {
 
     if (!existingArticle) {
       return res.status(404).json({ error: "Article not found" });
+    }
+
+    // Resolve category if slug is provided
+    let categoryId: string | undefined = undefined;
+    if (categorySlug && typeof categorySlug === "string" && categorySlug.trim()) {
+      const category = await prisma.category.findUnique({
+        where: {
+          projectId_slug: {
+            projectId: existingArticle.projectId,
+            slug: categorySlug.trim(),
+          },
+        },
+      });
+      if (!category) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+      categoryId = category.id;
     }
 
     const updatedArticle = await prisma.article.update({
@@ -2667,6 +2937,12 @@ router.put("/api/article/:articleId", async (req: Request, res: Response) => {
               ? String(coverImage).trim()
               : null
             : existingArticle.coverImage,
+        ...(categoryId !== undefined ? { categoryId } : {}),
+      },
+      include: {
+        category: {
+          select: { id: true, name: true, slug: true },
+        },
       },
     });
 

@@ -33,6 +33,7 @@ model Project {
   whyUsSection     WhyUsSection?
   ratings          Rating[]
   articles         Article[]
+  categories       Category[]
   socialMediaLinks SocialMediaLinks?
   customSections   CustomSection[]
 
@@ -205,17 +206,35 @@ model Rating {
   @@map("ratings")
 }
 
+model Category {
+  id        String    @id @default(cuid())
+  projectId String
+  name      String
+  slug      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  articles  Article[]
+
+  @@unique([projectId, slug])
+  @@index([projectId])
+  @@map("categories")
+}
+
 model Article {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   projectId  String
+  categoryId String?
   title      String
   content    String
   coverImage String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  project    Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   @@index([title])
+  @@index([categoryId])
   @@map("articles")
 }
 

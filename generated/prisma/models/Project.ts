@@ -208,6 +208,7 @@ export type ProjectWhereInput = {
   whyUsSection?: Prisma.XOR<Prisma.WhyUsSectionNullableScalarRelationFilter, Prisma.WhyUsSectionWhereInput> | null
   ratings?: Prisma.RatingListRelationFilter
   articles?: Prisma.ArticleListRelationFilter
+  categories?: Prisma.CategoryListRelationFilter
   socialMediaLinks?: Prisma.XOR<Prisma.SocialMediaLinksNullableScalarRelationFilter, Prisma.SocialMediaLinksWhereInput> | null
   customSections?: Prisma.CustomSectionListRelationFilter
 }
@@ -230,6 +231,7 @@ export type ProjectOrderByWithRelationInput = {
   whyUsSection?: Prisma.WhyUsSectionOrderByWithRelationInput
   ratings?: Prisma.RatingOrderByRelationAggregateInput
   articles?: Prisma.ArticleOrderByRelationAggregateInput
+  categories?: Prisma.CategoryOrderByRelationAggregateInput
   socialMediaLinks?: Prisma.SocialMediaLinksOrderByWithRelationInput
   customSections?: Prisma.CustomSectionOrderByRelationAggregateInput
 }
@@ -255,6 +257,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   whyUsSection?: Prisma.XOR<Prisma.WhyUsSectionNullableScalarRelationFilter, Prisma.WhyUsSectionWhereInput> | null
   ratings?: Prisma.RatingListRelationFilter
   articles?: Prisma.ArticleListRelationFilter
+  categories?: Prisma.CategoryListRelationFilter
   socialMediaLinks?: Prisma.XOR<Prisma.SocialMediaLinksNullableScalarRelationFilter, Prisma.SocialMediaLinksWhereInput> | null
   customSections?: Prisma.CustomSectionListRelationFilter
 }, "id" | "projectId">
@@ -303,6 +306,7 @@ export type ProjectCreateInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -325,6 +329,7 @@ export type ProjectUncheckedCreateInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -347,6 +352,7 @@ export type ProjectUpdateInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -369,6 +375,7 @@ export type ProjectUncheckedUpdateInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -568,6 +575,20 @@ export type ProjectUpdateOneRequiredWithoutRatingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutRatingsInput, Prisma.ProjectUpdateWithoutRatingsInput>, Prisma.ProjectUncheckedUpdateWithoutRatingsInput>
 }
 
+export type ProjectCreateNestedOneWithoutCategoriesInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCategoriesInput, Prisma.ProjectUncheckedCreateWithoutCategoriesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCategoriesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutCategoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCategoriesInput, Prisma.ProjectUncheckedCreateWithoutCategoriesInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCategoriesInput
+  upsert?: Prisma.ProjectUpsertWithoutCategoriesInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutCategoriesInput, Prisma.ProjectUpdateWithoutCategoriesInput>, Prisma.ProjectUncheckedUpdateWithoutCategoriesInput>
+}
+
 export type ProjectCreateNestedOneWithoutArticlesInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutArticlesInput, Prisma.ProjectUncheckedCreateWithoutArticlesInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutArticlesInput
@@ -627,6 +648,7 @@ export type ProjectCreateWithoutSiteSettingsInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -648,6 +670,7 @@ export type ProjectUncheckedCreateWithoutSiteSettingsInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -685,6 +708,7 @@ export type ProjectUpdateWithoutSiteSettingsInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -706,6 +730,7 @@ export type ProjectUncheckedUpdateWithoutSiteSettingsInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -727,6 +752,7 @@ export type ProjectCreateWithoutHeroSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -748,6 +774,7 @@ export type ProjectUncheckedCreateWithoutHeroSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -785,6 +812,7 @@ export type ProjectUpdateWithoutHeroSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -806,6 +834,7 @@ export type ProjectUncheckedUpdateWithoutHeroSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -827,6 +856,7 @@ export type ProjectCreateWithoutAboutSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -848,6 +878,7 @@ export type ProjectUncheckedCreateWithoutAboutSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -885,6 +916,7 @@ export type ProjectUpdateWithoutAboutSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -906,6 +938,7 @@ export type ProjectUncheckedUpdateWithoutAboutSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -927,6 +960,7 @@ export type ProjectCreateWithoutServicesSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -948,6 +982,7 @@ export type ProjectUncheckedCreateWithoutServicesSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -985,6 +1020,7 @@ export type ProjectUpdateWithoutServicesSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1006,6 +1042,7 @@ export type ProjectUncheckedUpdateWithoutServicesSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1027,6 +1064,7 @@ export type ProjectCreateWithoutWhyUsSectionInput = {
   siteSettings?: Prisma.SiteSettingsCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -1048,6 +1086,7 @@ export type ProjectUncheckedCreateWithoutWhyUsSectionInput = {
   siteSettings?: Prisma.SiteSettingsUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1085,6 +1124,7 @@ export type ProjectUpdateWithoutWhyUsSectionInput = {
   siteSettings?: Prisma.SiteSettingsUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1106,6 +1146,7 @@ export type ProjectUncheckedUpdateWithoutWhyUsSectionInput = {
   siteSettings?: Prisma.SiteSettingsUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1127,6 +1168,7 @@ export type ProjectCreateWithoutContactSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -1148,6 +1190,7 @@ export type ProjectUncheckedCreateWithoutContactSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1185,6 +1228,7 @@ export type ProjectUpdateWithoutContactSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1206,6 +1250,7 @@ export type ProjectUncheckedUpdateWithoutContactSectionInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1227,6 +1272,7 @@ export type ProjectCreateWithoutGalleryImagesInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -1248,6 +1294,7 @@ export type ProjectUncheckedCreateWithoutGalleryImagesInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1285,6 +1332,7 @@ export type ProjectUpdateWithoutGalleryImagesInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1306,6 +1354,7 @@ export type ProjectUncheckedUpdateWithoutGalleryImagesInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1327,6 +1376,7 @@ export type ProjectCreateWithoutPackagesInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -1348,6 +1398,7 @@ export type ProjectUncheckedCreateWithoutPackagesInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1385,6 +1436,7 @@ export type ProjectUpdateWithoutPackagesInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1406,6 +1458,7 @@ export type ProjectUncheckedUpdateWithoutPackagesInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1427,6 +1480,7 @@ export type ProjectCreateWithoutRatingsInput = {
   siteSettings?: Prisma.SiteSettingsCreateNestedOneWithoutProjectInput
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -1448,6 +1502,7 @@ export type ProjectUncheckedCreateWithoutRatingsInput = {
   siteSettings?: Prisma.SiteSettingsUncheckedCreateNestedOneWithoutProjectInput
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1485,6 +1540,7 @@ export type ProjectUpdateWithoutRatingsInput = {
   siteSettings?: Prisma.SiteSettingsUpdateOneWithoutProjectNestedInput
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1505,6 +1561,111 @@ export type ProjectUncheckedUpdateWithoutRatingsInput = {
   servicesSection?: Prisma.ServicesSectionUncheckedUpdateOneWithoutProjectNestedInput
   siteSettings?: Prisma.SiteSettingsUncheckedUpdateOneWithoutProjectNestedInput
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
+  articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
+  socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
+  customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutCategoriesInput = {
+  id?: string
+  projectId: string
+  name: string
+  description: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  aboutSection?: Prisma.AboutSectionCreateNestedOneWithoutProjectInput
+  contactSection?: Prisma.ContactSectionCreateNestedOneWithoutProjectInput
+  galleryImages?: Prisma.GalleryImageCreateNestedManyWithoutProjectInput
+  heroSection?: Prisma.HeroSectionCreateNestedOneWithoutProjectInput
+  packages?: Prisma.PackageCreateNestedManyWithoutProjectInput
+  servicesSection?: Prisma.ServicesSectionCreateNestedOneWithoutProjectInput
+  siteSettings?: Prisma.SiteSettingsCreateNestedOneWithoutProjectInput
+  whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
+  ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
+  articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
+  customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutCategoriesInput = {
+  id?: string
+  projectId: string
+  name: string
+  description: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  aboutSection?: Prisma.AboutSectionUncheckedCreateNestedOneWithoutProjectInput
+  contactSection?: Prisma.ContactSectionUncheckedCreateNestedOneWithoutProjectInput
+  galleryImages?: Prisma.GalleryImageUncheckedCreateNestedManyWithoutProjectInput
+  heroSection?: Prisma.HeroSectionUncheckedCreateNestedOneWithoutProjectInput
+  packages?: Prisma.PackageUncheckedCreateNestedManyWithoutProjectInput
+  servicesSection?: Prisma.ServicesSectionUncheckedCreateNestedOneWithoutProjectInput
+  siteSettings?: Prisma.SiteSettingsUncheckedCreateNestedOneWithoutProjectInput
+  whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
+  ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
+  articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
+  customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutCategoriesInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutCategoriesInput, Prisma.ProjectUncheckedCreateWithoutCategoriesInput>
+}
+
+export type ProjectUpsertWithoutCategoriesInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutCategoriesInput, Prisma.ProjectUncheckedUpdateWithoutCategoriesInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutCategoriesInput, Prisma.ProjectUncheckedCreateWithoutCategoriesInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutCategoriesInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutCategoriesInput, Prisma.ProjectUncheckedUpdateWithoutCategoriesInput>
+}
+
+export type ProjectUpdateWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  aboutSection?: Prisma.AboutSectionUpdateOneWithoutProjectNestedInput
+  contactSection?: Prisma.ContactSectionUpdateOneWithoutProjectNestedInput
+  galleryImages?: Prisma.GalleryImageUpdateManyWithoutProjectNestedInput
+  heroSection?: Prisma.HeroSectionUpdateOneWithoutProjectNestedInput
+  packages?: Prisma.PackageUpdateManyWithoutProjectNestedInput
+  servicesSection?: Prisma.ServicesSectionUpdateOneWithoutProjectNestedInput
+  siteSettings?: Prisma.SiteSettingsUpdateOneWithoutProjectNestedInput
+  whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
+  ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
+  articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
+  customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutCategoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  projectId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  aboutSection?: Prisma.AboutSectionUncheckedUpdateOneWithoutProjectNestedInput
+  contactSection?: Prisma.ContactSectionUncheckedUpdateOneWithoutProjectNestedInput
+  galleryImages?: Prisma.GalleryImageUncheckedUpdateManyWithoutProjectNestedInput
+  heroSection?: Prisma.HeroSectionUncheckedUpdateOneWithoutProjectNestedInput
+  packages?: Prisma.PackageUncheckedUpdateManyWithoutProjectNestedInput
+  servicesSection?: Prisma.ServicesSectionUncheckedUpdateOneWithoutProjectNestedInput
+  siteSettings?: Prisma.SiteSettingsUncheckedUpdateOneWithoutProjectNestedInput
+  whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
+  ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
@@ -1527,6 +1688,7 @@ export type ProjectCreateWithoutArticlesInput = {
   siteSettings?: Prisma.SiteSettingsCreateNestedOneWithoutProjectInput
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
@@ -1548,6 +1710,7 @@ export type ProjectUncheckedCreateWithoutArticlesInput = {
   siteSettings?: Prisma.SiteSettingsUncheckedCreateNestedOneWithoutProjectInput
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
@@ -1585,6 +1748,7 @@ export type ProjectUpdateWithoutArticlesInput = {
   siteSettings?: Prisma.SiteSettingsUpdateOneWithoutProjectNestedInput
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
@@ -1606,6 +1770,7 @@ export type ProjectUncheckedUpdateWithoutArticlesInput = {
   siteSettings?: Prisma.SiteSettingsUncheckedUpdateOneWithoutProjectNestedInput
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
@@ -1628,6 +1793,7 @@ export type ProjectCreateWithoutSocialMediaLinksInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   customSections?: Prisma.CustomSectionCreateNestedManyWithoutProjectInput
 }
 
@@ -1649,6 +1815,7 @@ export type ProjectUncheckedCreateWithoutSocialMediaLinksInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   customSections?: Prisma.CustomSectionUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1686,6 +1853,7 @@ export type ProjectUpdateWithoutSocialMediaLinksInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUpdateManyWithoutProjectNestedInput
 }
 
@@ -1707,6 +1875,7 @@ export type ProjectUncheckedUpdateWithoutSocialMediaLinksInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   customSections?: Prisma.CustomSectionUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -1728,6 +1897,7 @@ export type ProjectCreateWithoutCustomSectionsInput = {
   whyUsSection?: Prisma.WhyUsSectionCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksCreateNestedOneWithoutProjectInput
 }
 
@@ -1749,6 +1919,7 @@ export type ProjectUncheckedCreateWithoutCustomSectionsInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedCreateNestedOneWithoutProjectInput
   ratings?: Prisma.RatingUncheckedCreateNestedManyWithoutProjectInput
   articles?: Prisma.ArticleUncheckedCreateNestedManyWithoutProjectInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutProjectInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedCreateNestedOneWithoutProjectInput
 }
 
@@ -1786,6 +1957,7 @@ export type ProjectUpdateWithoutCustomSectionsInput = {
   whyUsSection?: Prisma.WhyUsSectionUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUpdateOneWithoutProjectNestedInput
 }
 
@@ -1807,6 +1979,7 @@ export type ProjectUncheckedUpdateWithoutCustomSectionsInput = {
   whyUsSection?: Prisma.WhyUsSectionUncheckedUpdateOneWithoutProjectNestedInput
   ratings?: Prisma.RatingUncheckedUpdateManyWithoutProjectNestedInput
   articles?: Prisma.ArticleUncheckedUpdateManyWithoutProjectNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutProjectNestedInput
   socialMediaLinks?: Prisma.SocialMediaLinksUncheckedUpdateOneWithoutProjectNestedInput
 }
 
@@ -1820,6 +1993,7 @@ export type ProjectCountOutputType = {
   packages: number
   ratings: number
   articles: number
+  categories: number
   customSections: number
 }
 
@@ -1828,6 +2002,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   packages?: boolean | ProjectCountOutputTypeCountPackagesArgs
   ratings?: boolean | ProjectCountOutputTypeCountRatingsArgs
   articles?: boolean | ProjectCountOutputTypeCountArticlesArgs
+  categories?: boolean | ProjectCountOutputTypeCountCategoriesArgs
   customSections?: boolean | ProjectCountOutputTypeCountCustomSectionsArgs
 }
 
@@ -1872,6 +2047,13 @@ export type ProjectCountOutputTypeCountArticlesArgs<ExtArgs extends runtime.Type
 /**
  * ProjectCountOutputType without action
  */
+export type ProjectCountOutputTypeCountCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CategoryWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
 export type ProjectCountOutputTypeCountCustomSectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CustomSectionWhereInput
 }
@@ -1895,6 +2077,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   whyUsSection?: boolean | Prisma.Project$whyUsSectionArgs<ExtArgs>
   ratings?: boolean | Prisma.Project$ratingsArgs<ExtArgs>
   articles?: boolean | Prisma.Project$articlesArgs<ExtArgs>
+  categories?: boolean | Prisma.Project$categoriesArgs<ExtArgs>
   socialMediaLinks?: boolean | Prisma.Project$socialMediaLinksArgs<ExtArgs>
   customSections?: boolean | Prisma.Project$customSectionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -1942,6 +2125,7 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   whyUsSection?: boolean | Prisma.Project$whyUsSectionArgs<ExtArgs>
   ratings?: boolean | Prisma.Project$ratingsArgs<ExtArgs>
   articles?: boolean | Prisma.Project$articlesArgs<ExtArgs>
+  categories?: boolean | Prisma.Project$categoriesArgs<ExtArgs>
   socialMediaLinks?: boolean | Prisma.Project$socialMediaLinksArgs<ExtArgs>
   customSections?: boolean | Prisma.Project$customSectionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -1962,6 +2146,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     whyUsSection: Prisma.$WhyUsSectionPayload<ExtArgs> | null
     ratings: Prisma.$RatingPayload<ExtArgs>[]
     articles: Prisma.$ArticlePayload<ExtArgs>[]
+    categories: Prisma.$CategoryPayload<ExtArgs>[]
     socialMediaLinks: Prisma.$SocialMediaLinksPayload<ExtArgs> | null
     customSections: Prisma.$CustomSectionPayload<ExtArgs>[]
   }
@@ -2377,6 +2562,7 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   whyUsSection<T extends Prisma.Project$whyUsSectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$whyUsSectionArgs<ExtArgs>>): Prisma.Prisma__WhyUsSectionClient<runtime.Types.Result.GetResult<Prisma.$WhyUsSectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   ratings<T extends Prisma.Project$ratingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$ratingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RatingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   articles<T extends Prisma.Project$articlesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$articlesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArticlePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  categories<T extends Prisma.Project$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   socialMediaLinks<T extends Prisma.Project$socialMediaLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$socialMediaLinksArgs<ExtArgs>>): Prisma.Prisma__SocialMediaLinksClient<runtime.Types.Result.GetResult<Prisma.$SocialMediaLinksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   customSections<T extends Prisma.Project$customSectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$customSectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomSectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -3010,6 +3196,30 @@ export type Project$articlesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ArticleScalarFieldEnum | Prisma.ArticleScalarFieldEnum[]
+}
+
+/**
+ * Project.categories
+ */
+export type Project$categoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
+  orderBy?: Prisma.CategoryOrderByWithRelationInput | Prisma.CategoryOrderByWithRelationInput[]
+  cursor?: Prisma.CategoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CategoryScalarFieldEnum | Prisma.CategoryScalarFieldEnum[]
 }
 
 /**

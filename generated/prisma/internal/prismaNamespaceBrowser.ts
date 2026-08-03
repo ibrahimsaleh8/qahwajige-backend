@@ -64,6 +64,7 @@ export const ModelName = {
   GalleryImage: 'GalleryImage',
   Package: 'Package',
   Rating: 'Rating',
+  Category: 'Category',
   Article: 'Article',
   SocialMediaLinks: 'SocialMediaLinks',
   CustomSection: 'CustomSection',
@@ -262,9 +263,22 @@ export const RatingScalarFieldEnum = {
 export type RatingScalarFieldEnum = (typeof RatingScalarFieldEnum)[keyof typeof RatingScalarFieldEnum]
 
 
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
 export const ArticleScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
+  categoryId: 'categoryId',
   title: 'title',
   content: 'content',
   coverImage: 'coverImage',
