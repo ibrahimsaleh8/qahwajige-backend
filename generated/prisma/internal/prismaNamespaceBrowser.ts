@@ -220,6 +220,7 @@ export const ContactSectionScalarFieldEnum = {
   label: 'label',
   title: 'title',
   description: 'description',
+  appear: 'appear',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

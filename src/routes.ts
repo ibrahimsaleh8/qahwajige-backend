@@ -555,12 +555,61 @@ router.get(
         },
         socialMediaLinks: project.socialMediaLinks,
         customSections: project.customSections ?? null,
+        showContactSection: project.contactSection?.appear ?? true,
       };
 
       return res.status(200).json(response);
     } catch (error) {
       console.error("GET CONTENT ERROR:", error);
       return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+);
+
+// PATCH /api/dashboard/:id/contact-section/toggle-appear
+router.patch(
+  "/api/dashboard/:id/contact-section/toggle-appear",
+  authenticateAdmin,
+  async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params as { id: string };
+      const body = req.body || {};
+
+      if (typeof body.appear !== "boolean") {
+        return res.status(400).json({
+          error: "Missing or invalid field",
+          message: "appear must be a boolean",
+        });
+      }
+
+      const existingProject = await prisma.project.findUnique({
+        where: { id },
+        include: { contactSection: true },
+      });
+
+      if (!existingProject) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const updatedContactSection = await prisma.contactSection.upsert({
+        where: { projectId: id },
+        update: { appear: body.appear },
+        create: { projectId: id, appear: body.appear },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: `Contact section is now ${body.appear ? "visible" : "hidden"}`,
+        data: {
+          appear: updatedContactSection.appear,
+        },
+      });
+    } catch (error) {
+      console.error("Error toggling contact section appear:", error);
+      return res.status(500).json({
+        error: "Failed to update contact section visibility",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
   },
 );

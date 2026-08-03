@@ -30,6 +30,7 @@ export type ContactSectionMinAggregateOutputType = {
   label: string | null
   title: string | null
   description: string | null
+  appear: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +41,7 @@ export type ContactSectionMaxAggregateOutputType = {
   label: string | null
   title: string | null
   description: string | null
+  appear: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,7 @@ export type ContactSectionCountAggregateOutputType = {
   label: number
   title: number
   description: number
+  appear: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +65,7 @@ export type ContactSectionMinAggregateInputType = {
   label?: true
   title?: true
   description?: true
+  appear?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +76,7 @@ export type ContactSectionMaxAggregateInputType = {
   label?: true
   title?: true
   description?: true
+  appear?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +87,7 @@ export type ContactSectionCountAggregateInputType = {
   label?: true
   title?: true
   description?: true
+  appear?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +171,7 @@ export type ContactSectionGroupByOutputType = {
   label: string
   title: string
   description: string
+  appear: boolean
   createdAt: Date
   updatedAt: Date
   _count: ContactSectionCountAggregateOutputType | null
@@ -196,6 +203,7 @@ export type ContactSectionWhereInput = {
   label?: Prisma.StringFilter<"ContactSection"> | string
   title?: Prisma.StringFilter<"ContactSection"> | string
   description?: Prisma.StringFilter<"ContactSection"> | string
+  appear?: Prisma.BoolFilter<"ContactSection"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ContactSection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ContactSection"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
@@ -207,6 +215,7 @@ export type ContactSectionOrderByWithRelationInput = {
   label?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  appear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   project?: Prisma.ProjectOrderByWithRelationInput
@@ -221,6 +230,7 @@ export type ContactSectionWhereUniqueInput = Prisma.AtLeast<{
   label?: Prisma.StringFilter<"ContactSection"> | string
   title?: Prisma.StringFilter<"ContactSection"> | string
   description?: Prisma.StringFilter<"ContactSection"> | string
+  appear?: Prisma.BoolFilter<"ContactSection"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ContactSection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ContactSection"> | Date | string
   project?: Prisma.XOR<Prisma.ProjectScalarRelationFilter, Prisma.ProjectWhereInput>
@@ -232,6 +242,7 @@ export type ContactSectionOrderByWithAggregationInput = {
   label?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  appear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ContactSectionCountOrderByAggregateInput
@@ -248,6 +259,7 @@ export type ContactSectionScalarWhereWithAggregatesInput = {
   label?: Prisma.StringWithAggregatesFilter<"ContactSection"> | string
   title?: Prisma.StringWithAggregatesFilter<"ContactSection"> | string
   description?: Prisma.StringWithAggregatesFilter<"ContactSection"> | string
+  appear?: Prisma.BoolWithAggregatesFilter<"ContactSection"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ContactSection"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ContactSection"> | Date | string
 }
@@ -257,6 +269,7 @@ export type ContactSectionCreateInput = {
   label?: string
   title?: string
   description?: string
+  appear?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   project: Prisma.ProjectCreateNestedOneWithoutContactSectionInput
@@ -268,6 +281,7 @@ export type ContactSectionUncheckedCreateInput = {
   label?: string
   title?: string
   description?: string
+  appear?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -277,6 +291,7 @@ export type ContactSectionUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  appear?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneRequiredWithoutContactSectionNestedInput
@@ -288,6 +303,7 @@ export type ContactSectionUncheckedUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  appear?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -298,6 +314,7 @@ export type ContactSectionCreateManyInput = {
   label?: string
   title?: string
   description?: string
+  appear?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -307,6 +324,7 @@ export type ContactSectionUpdateManyMutationInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  appear?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -317,6 +335,7 @@ export type ContactSectionUncheckedUpdateManyInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  appear?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -332,6 +351,7 @@ export type ContactSectionCountOrderByAggregateInput = {
   label?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  appear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -342,6 +362,7 @@ export type ContactSectionMaxOrderByAggregateInput = {
   label?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  appear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -352,6 +373,7 @@ export type ContactSectionMinOrderByAggregateInput = {
   label?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  appear?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -393,6 +415,7 @@ export type ContactSectionCreateWithoutProjectInput = {
   label?: string
   title?: string
   description?: string
+  appear?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -402,6 +425,7 @@ export type ContactSectionUncheckedCreateWithoutProjectInput = {
   label?: string
   title?: string
   description?: string
+  appear?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -427,6 +451,7 @@ export type ContactSectionUpdateWithoutProjectInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  appear?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -436,6 +461,7 @@ export type ContactSectionUncheckedUpdateWithoutProjectInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  appear?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -448,6 +474,7 @@ export type ContactSectionSelect<ExtArgs extends runtime.Types.Extensions.Intern
   label?: boolean
   title?: boolean
   description?: boolean
+  appear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -459,6 +486,7 @@ export type ContactSectionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   label?: boolean
   title?: boolean
   description?: boolean
+  appear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -470,6 +498,7 @@ export type ContactSectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   label?: boolean
   title?: boolean
   description?: boolean
+  appear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
@@ -481,11 +510,12 @@ export type ContactSectionSelectScalar = {
   label?: boolean
   title?: boolean
   description?: boolean
+  appear?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ContactSectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "label" | "title" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["contactSection"]>
+export type ContactSectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectId" | "label" | "title" | "description" | "appear" | "createdAt" | "updatedAt", ExtArgs["result"]["contactSection"]>
 export type ContactSectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   project?: boolean | Prisma.ProjectDefaultArgs<ExtArgs>
 }
@@ -507,6 +537,7 @@ export type $ContactSectionPayload<ExtArgs extends runtime.Types.Extensions.Inte
     label: string
     title: string
     description: string
+    appear: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["contactSection"]>
@@ -938,6 +969,7 @@ export interface ContactSectionFieldRefs {
   readonly label: Prisma.FieldRef<"ContactSection", 'String'>
   readonly title: Prisma.FieldRef<"ContactSection", 'String'>
   readonly description: Prisma.FieldRef<"ContactSection", 'String'>
+  readonly appear: Prisma.FieldRef<"ContactSection", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"ContactSection", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ContactSection", 'DateTime'>
 }
