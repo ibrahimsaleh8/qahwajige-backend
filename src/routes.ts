@@ -827,6 +827,11 @@ router.get(
               subheadline: true,
             },
           },
+          contactSection: {
+            select: {
+              appear: true,
+            },
+          },
         },
       });
 
@@ -842,6 +847,7 @@ router.get(
         },
         siteSettings: project.siteSettings,
         heroSection: project.heroSection,
+        showContactSection: project.contactSection?.appear,
       };
 
       return res.status(200).json({ data: main });
@@ -2650,7 +2656,11 @@ router.get(
       return res.status(200).json({
         success: true,
         data: {
-          category: { id: category.id, name: category.name, slug: category.slug },
+          category: {
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+          },
           articles,
           count: articles.length,
         },
@@ -2707,113 +2717,133 @@ router.get(
 );
 
 // POST /api/category
-router.post("/api/category", authenticateAdmin, async (req: Request, res: Response) => {
-  try {
-    const body = req.body || {};
-    const { projectId, name, slug } = body;
+router.post(
+  "/api/category",
+  authenticateAdmin,
+  async (req: Request, res: Response) => {
+    try {
+      const body = req.body || {};
+      const { projectId, name, slug } = body;
 
-    if (!projectId || typeof projectId !== "string") {
-      return res.status(400).json({ error: "projectId is required" });
-    }
-    if (!name || typeof name !== "string" || !name.trim()) {
-      return res.status(400).json({ error: "name is required" });
-    }
-    if (!slug || typeof slug !== "string" || !slug.trim()) {
-      return res.status(400).json({ error: "slug is required" });
-    }
+      if (!projectId || typeof projectId !== "string") {
+        return res.status(400).json({ error: "projectId is required" });
+      }
+      if (!name || typeof name !== "string" || !name.trim()) {
+        return res.status(400).json({ error: "name is required" });
+      }
+      if (!slug || typeof slug !== "string" || !slug.trim()) {
+        return res.status(400).json({ error: "slug is required" });
+      }
 
-    const project = await prisma.project.findUnique({ where: { id: projectId } });
-    if (!project) {
-      return res.status(404).json({ error: "Project not found" });
+      const project = await prisma.project.findUnique({
+        where: { id: projectId },
+      });
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      const existing = await prisma.category.findUnique({
+        where: { projectId_slug: { projectId, slug: slug.trim() } },
+      });
+      if (existing) {
+        return res
+          .status(409)
+          .json({ error: "Category with this slug already exists" });
+      }
+
+      const category = await prisma.category.create({
+        data: {
+          projectId,
+          name: name.trim(),
+          slug: slug.trim(),
+        },
+      });
+
+      return res.status(201).json({
+        success: true,
+        message: "Category created successfully",
+        data: { category },
+      });
+    } catch (error) {
+      console.error("Error creating category:", error);
+      return res.status(500).json({
+        error: "Failed to create category",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
-
-    const existing = await prisma.category.findUnique({
-      where: { projectId_slug: { projectId, slug: slug.trim() } },
-    });
-    if (existing) {
-      return res.status(409).json({ error: "Category with this slug already exists" });
-    }
-
-    const category = await prisma.category.create({
-      data: {
-        projectId,
-        name: name.trim(),
-        slug: slug.trim(),
-      },
-    });
-
-    return res.status(201).json({
-      success: true,
-      message: "Category created successfully",
-      data: { category },
-    });
-  } catch (error) {
-    console.error("Error creating category:", error);
-    return res.status(500).json({
-      error: "Failed to create category",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-});
+  },
+);
 
 // PUT /api/category/:categoryId
-router.put("/api/category/:categoryId", authenticateAdmin, async (req: Request, res: Response) => {
-  try {
-    const { categoryId } = req.params as { categoryId: string };
-    const body = req.body || {};
-    const { name, slug } = body;
+router.put(
+  "/api/category/:categoryId",
+  authenticateAdmin,
+  async (req: Request, res: Response) => {
+    try {
+      const { categoryId } = req.params as { categoryId: string };
+      const body = req.body || {};
+      const { name, slug } = body;
 
-    const existing = await prisma.category.findUnique({ where: { id: categoryId } });
-    if (!existing) {
-      return res.status(404).json({ error: "Category not found" });
+      const existing = await prisma.category.findUnique({
+        where: { id: categoryId },
+      });
+      if (!existing) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+
+      const updatedCategory = await prisma.category.update({
+        where: { id: categoryId },
+        data: {
+          name: name ? String(name).trim() : existing.name,
+          slug: slug ? String(slug).trim() : existing.slug,
+        },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Category updated successfully",
+        data: { category: updatedCategory },
+      });
+    } catch (error) {
+      console.error("Error updating category:", error);
+      return res.status(500).json({
+        error: "Failed to update category",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
-
-    const updatedCategory = await prisma.category.update({
-      where: { id: categoryId },
-      data: {
-        name: name ? String(name).trim() : existing.name,
-        slug: slug ? String(slug).trim() : existing.slug,
-      },
-    });
-
-    return res.status(200).json({
-      success: true,
-      message: "Category updated successfully",
-      data: { category: updatedCategory },
-    });
-  } catch (error) {
-    console.error("Error updating category:", error);
-    return res.status(500).json({
-      error: "Failed to update category",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-});
+  },
+);
 
 // DELETE /api/category/:categoryId
-router.delete("/api/category/:categoryId", authenticateAdmin, async (req: Request, res: Response) => {
-  try {
-    const { categoryId } = req.params as { categoryId: string };
+router.delete(
+  "/api/category/:categoryId",
+  authenticateAdmin,
+  async (req: Request, res: Response) => {
+    try {
+      const { categoryId } = req.params as { categoryId: string };
 
-    const existing = await prisma.category.findUnique({ where: { id: categoryId } });
-    if (!existing) {
-      return res.status(404).json({ error: "Category not found" });
+      const existing = await prisma.category.findUnique({
+        where: { id: categoryId },
+      });
+      if (!existing) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+
+      await prisma.category.delete({ where: { id: categoryId } });
+
+      return res.status(200).json({
+        success: true,
+        message: "Category deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting category:", error);
+      return res.status(500).json({
+        error: "Failed to delete category",
+        message: error instanceof Error ? error.message : "Unknown error",
+      });
     }
-
-    await prisma.category.delete({ where: { id: categoryId } });
-
-    return res.status(200).json({
-      success: true,
-      message: "Category deleted successfully",
-    });
-  } catch (error) {
-    console.error("Error deleting category:", error);
-    return res.status(500).json({
-      error: "Failed to delete category",
-      message: error instanceof Error ? error.message : "Unknown error",
-    });
-  }
-});
+  },
+);
 
 // POST /api/article
 router.post("/api/article", async (req: Request, res: Response) => {
@@ -2872,7 +2902,8 @@ router.post("/api/article", async (req: Request, res: Response) => {
       category = await prisma.category.create({
         data: {
           projectId,
-          name: resolvedSlug === "خدمات-الضيافة" ? "خدمات الضيافة" : resolvedSlug,
+          name:
+            resolvedSlug === "خدمات-الضيافة" ? "خدمات الضيافة" : resolvedSlug,
           slug: resolvedSlug,
         },
       });
@@ -2960,7 +2991,11 @@ router.put("/api/article/:articleId", async (req: Request, res: Response) => {
 
     // Resolve category if slug is provided
     let categoryId: string | undefined = undefined;
-    if (categorySlug && typeof categorySlug === "string" && categorySlug.trim()) {
+    if (
+      categorySlug &&
+      typeof categorySlug === "string" &&
+      categorySlug.trim()
+    ) {
       const category = await prisma.category.findUnique({
         where: {
           projectId_slug: {
