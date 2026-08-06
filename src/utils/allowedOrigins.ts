@@ -63,6 +63,12 @@ export const allowedOrigins = [
   "https://southernshoreyc.com",
   "https://www.southernshoreyc.com",
 
+  "https://yossiyovel.com",
+  "https://www.yossiyovel.com",
+
+  "https://togumsa.com",
+  "https://www.togumsa.com",
+
   "https://xn--rgb7bncfhh.com",
   "https://www.xn--rgb7bncfhh.com",
 ];
