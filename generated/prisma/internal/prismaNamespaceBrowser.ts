@@ -284,7 +284,10 @@ export const ArticleScalarFieldEnum = {
   content: 'content',
   coverImage: 'coverImage',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  description: 'description',
+  keywords: 'keywords',
+  status: 'status'
 } as const
 
 export type ArticleScalarFieldEnum = (typeof ArticleScalarFieldEnum)[keyof typeof ArticleScalarFieldEnum]

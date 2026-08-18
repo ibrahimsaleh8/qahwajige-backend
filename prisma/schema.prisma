@@ -222,17 +222,25 @@ model Category {
   @@map("categories")
 }
 
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
 model Article {
-  id         String    @id @default(cuid())
-  projectId  String
-  categoryId String?
-  title      String
-  content    String
-  coverImage String?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  project    Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  id          String        @id @default(cuid())
+  projectId   String
+  categoryId  String?
+  title       String
+  content     String
+  coverImage  String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category    Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  description String?
+  keywords    String[]
+  status      ArticleStatus @default(PUBLISHED)
 
   @@index([title])
   @@index([categoryId])
