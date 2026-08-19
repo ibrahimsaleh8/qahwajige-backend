@@ -258,121 +258,121 @@ router.post("/api/create-project", async (req: Request, res: Response) => {
         // Site Settings
         siteSettings: body.siteSettings
           ? {
-            create: {
-              siteTitle: body.siteSettings.siteTitle,
-              siteDescription: body.siteSettings.siteDescription,
-              siteKeywords: body.siteSettings.siteKeywords || [],
-              phone: body.siteSettings.phone,
-              whatsapp: body.siteSettings.whatsapp,
-              email: body.siteSettings.email,
-              address: body.siteSettings.address,
-              brandName: body.siteSettings.brandName,
-            },
-          }
+              create: {
+                siteTitle: body.siteSettings.siteTitle,
+                siteDescription: body.siteSettings.siteDescription,
+                siteKeywords: body.siteSettings.siteKeywords || [],
+                phone: body.siteSettings.phone,
+                whatsapp: body.siteSettings.whatsapp,
+                email: body.siteSettings.email,
+                address: body.siteSettings.address,
+                brandName: body.siteSettings.brandName,
+              },
+            }
           : undefined,
 
         // Hero Section
         heroSection: body.heroSection
           ? {
-            create: {
-              headline: body.heroSection.headline,
-              headlineHighlight: body.heroSection.headlineHighlight,
-              subheadline: body.heroSection.subheadline,
-              primaryCtaText: body.heroSection.primaryCtaText,
-              primaryCtaLink: body.heroSection.primaryCtaLink,
-              secondaryCtaText: body.heroSection.secondaryCtaText,
-              secondaryCtaLink: body.heroSection.secondaryCtaLink,
-              backgroundImage: body.heroSection.backgroundImage,
-              isActive: body.heroSection.isActive ?? true,
-            },
-          }
+              create: {
+                headline: body.heroSection.headline,
+                headlineHighlight: body.heroSection.headlineHighlight,
+                subheadline: body.heroSection.subheadline,
+                primaryCtaText: body.heroSection.primaryCtaText,
+                primaryCtaLink: body.heroSection.primaryCtaLink,
+                secondaryCtaText: body.heroSection.secondaryCtaText,
+                secondaryCtaLink: body.heroSection.secondaryCtaLink,
+                backgroundImage: body.heroSection.backgroundImage,
+                isActive: body.heroSection.isActive ?? true,
+              },
+            }
           : undefined,
 
         // About Section
         aboutSection: body.aboutSection
           ? {
-            create: {
-              label: body.aboutSection.label,
-              title: body.aboutSection.title,
-              description1: body.aboutSection.description1,
-              image: body.aboutSection.image,
-            },
-          }
+              create: {
+                label: body.aboutSection.label,
+                title: body.aboutSection.title,
+                description1: body.aboutSection.description1,
+                image: body.aboutSection.image,
+              },
+            }
           : undefined,
 
         // Services Section
         servicesSection: body.servicesSection
           ? {
-            create: {
-              label: body.servicesSection.label,
-              title: body.servicesSection.title,
-              description: body.servicesSection.description,
-              services: body.servicesSection.services
-                ? {
-                  create: body.servicesSection.services.map(
-                    (service: {
-                      icon: any;
-                      title: any;
-                      description: any;
-                    }) => ({
-                      icon: service.icon,
-                      title: service.title,
-                      description: service.description,
-                    }),
-                  ),
-                }
-                : undefined,
-            },
-          }
+              create: {
+                label: body.servicesSection.label,
+                title: body.servicesSection.title,
+                description: body.servicesSection.description,
+                services: body.servicesSection.services
+                  ? {
+                      create: body.servicesSection.services.map(
+                        (service: {
+                          icon: any;
+                          title: any;
+                          description: any;
+                        }) => ({
+                          icon: service.icon,
+                          title: service.title,
+                          description: service.description,
+                        }),
+                      ),
+                    }
+                  : undefined,
+              },
+            }
           : undefined,
 
         // Why Us Section
         whyUsSection: body.whyUsSection
           ? {
-            create: {
-              label: body.whyUsSection.label,
-              title: body.whyUsSection.title,
-              description: body.whyUsSection.description,
-              features: body.whyUsSection.features
-                ? {
-                  create: body.whyUsSection.features.map(
-                    (feature: {
-                      icon: any;
-                      title: any;
-                      description: any;
-                    }) => ({
-                      icon: feature.icon,
-                      title: feature.title,
-                      description: feature.description,
-                    }),
-                  ),
-                }
-                : undefined,
-            },
-          }
+              create: {
+                label: body.whyUsSection.label,
+                title: body.whyUsSection.title,
+                description: body.whyUsSection.description,
+                features: body.whyUsSection.features
+                  ? {
+                      create: body.whyUsSection.features.map(
+                        (feature: {
+                          icon: any;
+                          title: any;
+                          description: any;
+                        }) => ({
+                          icon: feature.icon,
+                          title: feature.title,
+                          description: feature.description,
+                        }),
+                      ),
+                    }
+                  : undefined,
+              },
+            }
           : undefined,
 
         // Contact Section
         contactSection: body.contactSection
           ? {
-            create: {
-              label: body.contactSection.label,
-              title: body.contactSection.title,
-              description: body.contactSection.description,
-            },
-          }
+              create: {
+                label: body.contactSection.label,
+                title: body.contactSection.title,
+                description: body.contactSection.description,
+              },
+            }
           : undefined,
 
         // Gallery Images
         galleryImages: body.galleryImages
           ? {
-            create: body.galleryImages.map(
-              (image: { url: any; alt: any }) => ({
-                url: image.url,
-                alt: image.alt,
-              }),
-            ),
-          }
+              create: body.galleryImages.map(
+                (image: { url: any; alt: any }) => ({
+                  url: image.url,
+                  alt: image.alt,
+                }),
+              ),
+            }
           : undefined,
       },
       include: {
@@ -504,43 +504,43 @@ router.get(
         },
         hero: project.heroSection
           ? {
-            headline: project.heroSection.headline,
-            subheadline: project.heroSection.subheadline,
-            whatsApp: project.siteSettings?.whatsapp ?? "",
-          }
+              headline: project.heroSection.headline,
+              subheadline: project.heroSection.subheadline,
+              whatsApp: project.siteSettings?.whatsapp ?? "",
+            }
           : null,
         about: project.aboutSection
           ? {
-            label: project.aboutSection.label,
-            title: project.aboutSection.title,
-            description1: project.aboutSection.description1,
-            image: project.aboutSection.image ?? null,
-          }
+              label: project.aboutSection.label,
+              title: project.aboutSection.title,
+              description1: project.aboutSection.description1,
+              image: project.aboutSection.image ?? null,
+            }
           : null,
         services: project.servicesSection
           ? {
-            label: project.servicesSection.label,
-            title: project.servicesSection.title,
-            description: project.servicesSection.description,
-            items: project.servicesSection.services.map((s) => ({
-              id: s.id,
-              icon: s.icon,
-              title: s.title,
-              description: s.description,
-            })),
-          }
+              label: project.servicesSection.label,
+              title: project.servicesSection.title,
+              description: project.servicesSection.description,
+              items: project.servicesSection.services.map((s) => ({
+                id: s.id,
+                icon: s.icon,
+                title: s.title,
+                description: s.description,
+              })),
+            }
           : null,
         whyUs: project.whyUsSection
           ? {
-            label: project.whyUsSection.label,
-            title: project.whyUsSection.title,
-            description: project.whyUsSection.description,
-            features: project.whyUsSection.features.map((f) => ({
-              icon: f.icon,
-              title: f.title,
-              description: f.description,
-            })),
-          }
+              label: project.whyUsSection.label,
+              title: project.whyUsSection.title,
+              description: project.whyUsSection.description,
+              features: project.whyUsSection.features.map((f) => ({
+                icon: f.icon,
+                title: f.title,
+                description: f.description,
+              })),
+            }
           : null,
         gallery: project.galleryImages.map((img) => ({
           url: img.url,
@@ -695,43 +695,43 @@ router.get(
         },
         hero: project.heroSection
           ? {
-            headline: project.heroSection.headline,
-            subheadline: project.heroSection.subheadline,
-            whatsApp: project.siteSettings?.whatsapp ?? "",
-          }
+              headline: project.heroSection.headline,
+              subheadline: project.heroSection.subheadline,
+              whatsApp: project.siteSettings?.whatsapp ?? "",
+            }
           : null,
         about: project.aboutSection
           ? {
-            label: project.aboutSection.label,
-            title: project.aboutSection.title,
-            description1: project.aboutSection.description1,
-            image: project.aboutSection.image ?? null,
-          }
+              label: project.aboutSection.label,
+              title: project.aboutSection.title,
+              description1: project.aboutSection.description1,
+              image: project.aboutSection.image ?? null,
+            }
           : null,
         services: project.servicesSection
           ? {
-            label: project.servicesSection.label,
-            title: project.servicesSection.title,
-            description: project.servicesSection.description,
-            items: project.servicesSection.services.map((s) => ({
-              id: s.id,
-              icon: s.icon,
-              title: s.title,
-              description: s.description,
-            })),
-          }
+              label: project.servicesSection.label,
+              title: project.servicesSection.title,
+              description: project.servicesSection.description,
+              items: project.servicesSection.services.map((s) => ({
+                id: s.id,
+                icon: s.icon,
+                title: s.title,
+                description: s.description,
+              })),
+            }
           : null,
         whyUs: project.whyUsSection
           ? {
-            label: project.whyUsSection.label,
-            title: project.whyUsSection.title,
-            description: project.whyUsSection.description,
-            features: project.whyUsSection.features.map((f) => ({
-              icon: f.icon,
-              title: f.title,
-              description: f.description,
-            })),
-          }
+              label: project.whyUsSection.label,
+              title: project.whyUsSection.title,
+              description: project.whyUsSection.description,
+              features: project.whyUsSection.features.map((f) => ({
+                icon: f.icon,
+                title: f.title,
+                description: f.description,
+              })),
+            }
           : null,
         gallery: project.galleryImages.map((img) => ({
           url: img.url,
@@ -2584,6 +2584,7 @@ router.get(
           createdAt: true,
           updatedAt: true,
           content: true,
+          keywords: true,
           category: {
             select: {
               id: true,
@@ -2853,7 +2854,8 @@ router.delete(
 router.post("/api/article", async (req: Request, res: Response) => {
   try {
     const body = req.body || {};
-    const { projectId, title, content, coverImage, categorySlug, keywords } = body;
+    const { projectId, title, content, coverImage, categorySlug, keywords } =
+      body;
 
     // 1️⃣ Validation
     if (!projectId || typeof projectId !== "string") {
@@ -3030,7 +3032,11 @@ router.put("/api/article/:articleId", async (req: Request, res: Response) => {
             : existingArticle.coverImage,
         ...(categoryId !== undefined ? { categoryId } : {}),
         ...(Array.isArray(keywords)
-          ? { keywords: keywords.map((k: unknown) => String(k).trim()).filter(Boolean) }
+          ? {
+              keywords: keywords
+                .map((k: unknown) => String(k).trim())
+                .filter(Boolean),
+            }
           : {}),
       },
       include: {
